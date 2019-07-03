@@ -1,11 +1,7 @@
-
-
-// EspnowTwoWayController.ino
-
 // a minimal program derived from
 //          https://github.com/HarringayMakerSpace/ESP-Now
 
-// This is the program that sends the data and receives the reply. (The Controller)
+// This is the program that sends the data and receives the reply to sent it to the MQTT.
 
 //=============
 
@@ -37,10 +33,8 @@ DataStruct sendingData;
 DataStruct receivedData;
 // receivedData could use a completely different struct as long as it matches
 //   the reply that is sent by the slave
-//const char* wifi_ssid = "Garagem";
-//const char* wifi_password = "Garagem@2018";
-const char* wifi_ssid = "aula-ic3";
-const char* wifi_password = "iotic@2019";
+const char* wifi_ssid = "******";
+const char* wifi_password = "******";
 #define mqtt_server "iot.eclipse.org"
 unsigned long lastSentMillis;
 unsigned long sendIntervalMillis = 1000;
@@ -49,8 +43,6 @@ unsigned long ackMicros;
 unsigned long replyMicros;
 
 unsigned long counter = 0;
-
-byte ledPin = 14;
 
 boolean messageReceived = false;
 char dados[32];
@@ -118,6 +110,7 @@ void reconnect() {
     // If you do not want to use a username and password, change next line to
     if (client.connect("ESP8266Client")) {
       Serial.println("connected");
+      // publish Slave data to MQTT
       client.publish("mc857/topic", dados); 
     } else {
       Serial.print("failed, rc=");
@@ -144,7 +137,6 @@ void loop() {
   }
   
   client.loop();
-  //client.publish("mc857/topic", dados);
   Serial.printf("Dados publicados no MQTT");
   WiFi.disconnect();
   counter = counter + 1;
