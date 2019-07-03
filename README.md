@@ -11,4 +11,4 @@ O Master estabelece uma conexão com o Slave, na resposta do Slave são mandados
 Já o Slave fica no modo Esp Now a todo o momento esperando o Master pedir conexão. Utilizando um sensor DHT para registar os dados e um LDR pra registrar a luminosidade ele registra a cada conexão os dados atuais para enviá-los ao Master.
 
 Falhas:
-Após algumas leituras o Slave registra um estouro de memoria e reinia o ESP8266. Sabemos que o peblema é na leitura do DHT, já que se comentarmos as linhas que registram os novos dados a cada conexão, o erro não ocorre.
+Após algumas leituras o Slave registra um estouro de memoria e reinia o ESP8266. Sabemos que o peblema é na leitura do DHT, já que se comentarmos as linhas que registram os novos dados a cada conexão (Linhas 93 e 95 do Slave.ino), o erro não ocorre.
