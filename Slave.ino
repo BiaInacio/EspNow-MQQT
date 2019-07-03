@@ -35,8 +35,6 @@ DHT dht(DHTPIN, DHTTYPE);
  * and the new gateway will still pick up the remote sensors which are still sending to the old MAC
  */
 uint8_t mac[] = {0x36, 0x33, 0x33, 0x33, 0x33, 0x33};
-int temp;
-int hum;
 int lig;
 float h;
 float t;
@@ -86,20 +84,14 @@ void setup() {
     esp_now_register_recv_cb(receiveCallBackFunction);
     
     //light sensor.
-    //int valorSensor = analogRead(LUMS);
     lig = analogRead(LUMS);
 
     //Lendo sensor DHT
     h = dht.readHumidity();
     // Read temperature as Celsius (the default)
     t = dht.readTemperature();
-      
-    //temp = (int) t;
-    //hum = (int) h;
-
-    //reply = ""; 
+    
     sprintf(reply,"T:%.2f°C - M:%.2f - L: %2d", t, h, lig);
-    //sprintf(replyData.text,"T:%.2f°C - M:%.2f - L: %2d", t, h, lig);
 
     strcpy(replyData.text, reply);
     Serial.print("Message "); Serial.println(replyData.text);
@@ -145,16 +137,10 @@ void sendReply(uint8_t *macAddr) {
 
     //Lendo sensor DHT
     h = dht.readHumidity();
-    //Serial.println("hi");
     // Read temperature as Celsius (the default)
     t = dht.readTemperature();
-      
-    //temp = (int) t;
-    //hum = (int) h;
 
-    //reply = ""; 
     sprintf(reply,"T:%.2f°C - M:%.2f - L: %2d", t, h, lig);
-    //sprintf(replyData.text,"T:%.2f°C - M:%.2f - L: %2d", t, h, lig);
 
     strcpy(replyData.text, reply);
 
